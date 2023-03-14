@@ -1,10 +1,16 @@
+import 'dart:async';
+import 'package:animal/res/global.dart';
+import 'package:animal/views/screens/detail.dart';
 import 'package:flutter/material.dart';
 
-void main(){
+void main() {
   runApp(
-    const MaterialApp(
+    MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: HomePage(),
+      routes: {
+        '/': (context) => const HomePage(),
+        'detail': (context) => const Detail(),
+      },
     ),
   );
 }
@@ -17,11 +23,27 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+
+  @override
+  void initState() {
+    super.initState();
+    Global.value = Global.random.nextInt(5);
+
+    Timer(
+      const Duration(seconds: 2),
+        () => Navigator.pushNamed(context, 'detail'),
+    );
+
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(""),
+      body: Container(
+        height: double.infinity,
+        width: double.infinity,
+        color: Colors.black,
+        child: Image.asset(Global.animalList.elementAt(Global.value),fit: BoxFit.fill),
       ),
     );
   }
